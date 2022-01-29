@@ -193,4 +193,3 @@ if __name__ == '__main__':
                         i, type(e))
                     raise e
     pool.join()
-

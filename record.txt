@@ -1,0 +1,29 @@
+安裝
+xarray
+
+
+無法運行
+1. pretreatment.py 125 行 scisc.imsave(save_path, img) 改 cv2.imwrite(save_path, img)
+
+2. ValueError: Object arrays cannot be loaded when allow_pickle=False
+該原因是因為新版本的numpy 已將allow_pickle預設為False
+可以選擇降版本或np.load(path, allow_pickle=True)
+#https://jennaweng0621.pixnet.net/blog/post/404472376-%5Bpython%5D-%E8%A7%A3%E6%B1%BAobject-arrays-cannot-be-loaded-when-allow_pic
+我選擇後者於data_looder 42行修改 pid_list = np.load(pid_fname, allow_pickle=True) 
+
+3. 我在train.py test.py pretreatment.py (148行)中加入if __name__ == "__main__": 
+
+4. Warning: masked_scatter_ received a mask with dtype torch.uint8, this behavior is now deprecated,please use a mask with dtype torch.bool instead. (function masked_scatter__cuda)
+運行環境>=pytorch1.2 就會出這個問題，在/network/triplet.py 15行、16行改.bool()
+        hp_mask = (label.unsqueeze(1) == label.unsqueeze(2)).byte().view(-1)
+        hn_mask = (label.unsqueeze(1) != label.unsqueeze(2)).byte().view(-1)
+        
+        hp_mask = (label.unsqueeze(1) == label.unsqueeze(2)).bool().view(-1) #運行環境>=pytorch1.2 改.bool()
+        hn_mask = (label.unsqueeze(1) != label.unsqueeze(2)).bool().view(-1) #運行環境>=pytorch1.2 改.bool()
+
+
+5. THCudaCheck FAIL file=..\torch/csrc/generic/StorageSharing.cpp line=249 error=801 : operation not supported
+    # You need to set num_workers to zero in your call to ImageDataLoaders
+
+5. C:\Users\gaitProject\.conda\envs\pytorch_py37\lib\site-packages\numpy\lib\npyio.py:528: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+

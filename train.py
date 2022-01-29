@@ -1,6 +1,7 @@
 from model.initialization import initialization
 from config import conf
 import argparse
+import os
 
 
 def boolean_string(s):
@@ -8,15 +9,17 @@ def boolean_string(s):
         raise ValueError('Not a valid boolean string')
     return s.upper() == 'TRUE'
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Train')
+    parser.add_argument('--cache', default=True, type=boolean_string,
+                        help='cache: if set as TRUE all the training data will be loaded at once'
+                            ' before the training start. Default: TRUE')
+    opt = parser.parse_args()
 
-parser = argparse.ArgumentParser(description='Train')
-parser.add_argument('--cache', default=True, type=boolean_string,
-                    help='cache: if set as TRUE all the training data will be loaded at once'
-                         ' before the training start. Default: TRUE')
-opt = parser.parse_args()
 
-m = initialization(conf, train=opt.cache)[0]
+    m = initialization(conf, train=opt.cache)[0]
 
-print("Training START")
-m.fit()
-print("Training COMPLETE123")
+    print('主處理程序 ID:', os.getpid())
+    print("Training START")
+    m.fit()
+    print("Training COMPLETE")
