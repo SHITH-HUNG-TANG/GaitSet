@@ -19,4 +19,4 @@ m = initialization(conf, train=opt.cache)[0]
 
 print("Training START")
 m.fit()
-print("Training COMPLETE")
+print("Training COMPLETE123")
