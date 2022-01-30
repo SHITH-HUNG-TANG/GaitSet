@@ -16,7 +16,7 @@ conf = {
         'hidden_dim': 256,
         'lr': 1e-4,
         'hard_or_full_trip': 'full',
-        'batch_size': (32, 16),
+        'batch_size': (4, 16),
         'restore_iter': 0,
         'total_iter': 80000,
         'margin': 0.2,

@@ -16,7 +16,7 @@ def boolean_string(s):
 parser = argparse.ArgumentParser(description='Test')
 parser.add_argument('--iter', default='80000', type=int,
                     help='iter: iteration of the checkpoint to load. Default: 80000')
-parser.add_argument('--batch_size', default='50', type=int,
+parser.add_argument('--batch_size', default='16', type=int,
                     help='batch_size: batch size for parallel test. Default: 1')
 parser.add_argument('--cache', default=False, type=boolean_string,
                     help='cache: if set as TRUE all the test data will be loaded at once'
